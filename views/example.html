@@ -7,31 +7,32 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
     <script>
-        $(document).ready(function(){
-            //데이터를 보여주는 함수입니다.
+        $(document).ready(function(){//초기화면에 대한 설정
+            //데이터를 보여주는 함수
             function selectData(){
-                //#output 내부의 내용물을 제거합니다. output은 html body에 있다
-                $('#output').empty();
-                //Ajax를 수행합니다.
-
+                //#output 내부의 내용물을 제거. output은 html body에 있음
+                $('#output').empty();//id output을 빈 공간으로 초기화
+                
+                //Ajax를 수행. Ajax는 자바스크립트를 이용한 비동기적 서버 통신
+                //DB에서 받아온 값을 테이블 형식으로 표현
                 $.getJSON('http://127.0.0.1:52273/products', function(data){
                     $(data).each(function (index, item){
-                        var output = '';
+                        var output = ''; //output 변수에 테이블 요소를 추가해나감
                         output += '<tr>';
                         output += '  <td>' + item.id + '</td>';
                         output += '  <td>' + item.name + '</td>';
                         output += '  <td>' + item.modelnumber + '</td>';
                         output += '  <td>' + item.series + '</td>';
                         output += '</tr>';
-                        $('#output').append(output);
+                        $('#output').append(output);//id output에 위의 output 변수를 붙여넣어 화면에 출력되도록 함
                     });
                 });
             }
-            //데이터를 추가합니다.
-            $('#insert_form').submit(function (event){
+            //데이터를 추가합니다. id insert_form 에 대한 설정
+            $('#insert_form').submit(function (event){//submit 타입에 대한 설정
                 //Ajax를 수행합니다.
                 var data = $(this).serialize();//입력한 값을 data에 다 넣음
-                $.post('http://127.0.0.1:52273/products', data, selectData);
+                $.post('http://127.0.0.1:52273/products', data, selectData);//입력받은 data 값으로 selectedData함수를 호출
                 //기본 이벤트를 제거합니다.
                 event.preventDefault();
             });
